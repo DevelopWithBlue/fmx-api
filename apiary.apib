@@ -1,5 +1,5 @@
 FORMAT: 1A
-HOST: https://fmx.forevermark.com/api/v1
+HOST: https://fmx.forevermark.com/api/v1/
 
 # Forevermark FMX Diamond Search
 
@@ -11,7 +11,7 @@ Forevermark's FMX Diamond Search is an API used for fetching diamond search resu
 For every authenticated API call, callers must include the following HTTP request header values:
 * `AUTHORIZATION`
 
-Authenticated API call endpoints begin with the route, `/api/`.
+Authenticated API call endpoints begin with the route, `/api/v1/`.
 
 Value for `AUTHORIZATION` should be set to "Bearer {token}".
 
@@ -58,7 +58,7 @@ Callers use this endpoint to receive an authentication token (session ID).  Call
 + Response 201 (application/json)
 
         {
-            "session_id": 1,
+            "session_id": "a3296040ed7a28289c4dda14c6238e31",
             "user_id": 1,
             "token": "a3296040ed7a28289c4dda14c6238e31",
             "issued_at": "2018-02-02T23:39:50.802Z",
@@ -76,7 +76,7 @@ Callers use this endpoint to receive an authentication token (session ID).  Call
         }
 
 
-## Session [/api/sessions/{session_id}]
+## Session [/sessions/{session_id}]
 
 ### DELETE-SESSION [DELETE]
 
@@ -85,7 +85,7 @@ Callers use this endpoint to "logout". This can be useful for tracking usage met
 + Response 204 (application/json)
 
 
-## User [/api/users/{user_id}]
+## User [/users/{user_id}]
 
 + Parameters
     + user_id: `1` (number, required) - Userid.
@@ -97,44 +97,13 @@ Callers use this endpoint to "logout". This can be useful for tracking usage met
         {
             "user_id": 1,
             "first_name": "John",
-            "last_name": "Doe"
-        }
-
-+ Response 401 (application/json)
-
-        {
-            "error" : {
-                "status": 401,
-                "message": "Unauthorized",
-                "reason": "TOKEN_INVALID"
+            "last_name": "Doe",
+            "permissions": {
+                "shapes": {
+                    "fire_cushion": 1,
+                    "fire_mark": 1
+                }
             }
-        }
-
-+ Response 403 (application/json)
-
-        {
-            "error" : {
-                "status": 403,
-                "message": "Unauthorized",
-                "reason": "ACCESS_DENIED"
-            }
-        }
-
-### UPDATE-USER [PUT]
-
-+ Request (application/json)
-
-        {
-            "first_name": "Jon",
-            "last_name": "Smith"
-        }
-
-+ Response 200 (application/json)
-
-        {
-            "user_id": 1,
-            "first_name": "Jon",
-            "last_name": "Smith"
         }
 
 + Response 401 (application/json)
@@ -158,133 +127,7 @@ Callers use this endpoint to "logout". This can be useful for tracking usage met
         }
 
 
-## Suppliers Collection [/api/suppliers]
-
-### GET-ALL-SUPPLIERS [GET]
-
-+ Response 200 (application/json)
-
-        [
-            {
-                "supplier_id": 1,
-                "name": "Supplier A",
-                "type": "Raw"
-            },
-            {
-                "supplier_id": 2,
-                "name": "Supplier B",
-                "type": "Finished"
-            },
-            {
-                "supplier_id": 3,
-                "name": "Supplier C",
-                "type": "Wholesale"
-            }
-        ]
-
-## Diamonds Collection [/api/diamonds]
-
-### GET-ALL-DIAMONDS [GET]
-
-+ Response 200 (application/json)
-
-        [
-            {
-                "diamond_id": 98733222,
-                "shape": "SQ",
-                "carat": 3.33,
-                "color": "F",
-                "clarity": "IF",
-                "cut": "EX",
-                "lab": "FDI",
-                "measurements": "5.30 x 6.30 x 3.10",
-                "lw_ratio": "0.88:1",
-                "price_per_carat": 20,
-                "price": 1500.00,
-                "graded": "Y",
-                "report_id": "987654321",
-                "report_url": "https://fmx.forevermark.com/certificate.htm?b=manual&f=1/9594.pdf",
-                "report_date": "Jan-01",
-                "polish": "EX",
-                "symmetry": "VG",
-                "fluor": "NON",
-                "fmd": "Crossworks",
-                "matched_pair_id": 22233789,
-                "table": 0.539,
-                "depth": 0.623,
-                "barcode": "20000418248",
-                "crown_angle": 34.8,
-                "crown_height": 15.2,
-                "star_length": 1.0,
-                "girdle_percent": 4.1,
-                "girdle_lower": 1.1,
-                "pavilion_angle": 40.8,
-                "pavilion_depth": 10.1,
-                "culet": "NON",
-                "features": "Indented Natural,Knot,Twinning Wisp",
-                "comments": "44850167",
-                "company": {
-                    "name": "Crossworks",
-                    "address_1": "2101 Fourth Avenue",
-                    "address_2": "Suite 1320",
-                    "city": "Seattle",
-                    "country": "US",
-                    "phone": "(604) 669-9562",
-                    "fax": "(604) 669-9562",
-                    "email": "email@crossworks.com",
-                    "website": "https://crossworks.com"
-                }
-            },
-            {
-                "diamond_id": 65534422,
-                "shape": "RND",
-                "carat": 4.05,
-                "color": "H",
-                "clarity": "VVS1",
-                "cut": "BL",
-                "lab": "FDI",
-                "measurements": "7.60 x 7.59 x 5.55",
-                "lw_ratio": "1.00:1",
-                "price_per_carat": 30,
-                "price": 1000.00,
-                "graded": "Y",
-                "report_id": "123456789",
-                "report_url": "https://fmx.forevermark.com/certificate.htm?b=manual&f=1/4543.pdf",
-                "report_date": "Jan-01",
-                "polish": "VG",
-                "symmetry": "EX",
-                "fluor": "N",
-                "fmd": "BlueChannel, Inc."
-                "matched_pair_id": 22233789,
-                "table": 0.539,
-                "depth": 0.623,
-                "barcode": "20000418248",
-                "crown_angle": 34.8,
-                "crown_height": 15.2,
-                "star_length": 1.0,
-                "girdle_percent": 4.1,
-                "girdle_lower": 1.1,
-                "pavilion_angle": 40.8,
-                "pavilion_depth": 10.1,
-                "culet": "NON",
-                "features": "Indented Natural,Knot,Twinning Wisp",
-                "comments": "44850167",
-                "company": {
-                    "name": "BlueChannel, Inc.",
-                    "address_1": "111 Main St.",
-                    "address_2": "Suite 999",
-                    "city": "Denver",
-                    "country": "US",
-                    "phone": "(604) 669-9562",
-                    "fax": "(604) 669-9562",
-                    "email": "email@bluechannel.com",
-                    "website": "https://bluechannel.com"
-                }
-            }
-        ]
-
-
-## Diamond [/api/diamonds/{diamond_id}]
+## Diamond [/diamonds/detail/{diamond_id}]
 
 + Parameters
     + diamond_id: `98733222` (number, required) - ID of requested diamond.
@@ -294,7 +137,7 @@ Callers use this endpoint to "logout". This can be useful for tracking usage met
 + Response 200 (application/json)
 
         {
-            "diamond_id": 98733222,
+            "diamond_id": "98733222",
             "shape": "SQ",
             "carat": 3.33,
             "color": "F",
@@ -303,17 +146,17 @@ Callers use this endpoint to "logout". This can be useful for tracking usage met
             "lab": "FDI",
             "measurements": "5.30 x 6.30 x 3.10",
             "lw_ratio": "0.88:1",
-            "price_per_carat": 20,
-            "price": 1500.00,
-            "graded": "Y",
-            "report_id": "987654321",
-            "report_url": "https://fmx.forevermark.com/certificate.htm?b=manual&f=1/9594.pdf",
-            "report_date": "Jan-01",
             "polish": "EX",
             "symmetry": "VG",
             "fluor": "NON",
             "fmd": "Crossworks",
-            "matched_pair_id": 22233789,
+            "report_id": "987654321",
+            "report_url": "https://fmx.forevermark.com/certificate.htm?b=manual&f=1/9594.pdf",
+            "report_date": "Jan-01",
+            "price_per_carat": 20,
+            "price": 1500.00,
+            "graded": "Y",
+            "matched_pair_id": "22233789",
             "table": 0.539,
             "depth": 0.623,
             "barcode": "20000418248",
@@ -341,10 +184,7 @@ Callers use this endpoint to "logout". This can be useful for tracking usage met
         }
 
 
-## Diamond Search Collection [/api/users/{user_id}/diamonds/searches]
-
-+ Parameters
-    + user_id: `1` (number, required) - Userid.
+## Diamond Search Collection [/diamonds/search]
 
 ### CREATE-DIAMOND-SEARCH [POST]
 
@@ -352,6 +192,8 @@ Callers use this endpoint to "logout". This can be useful for tracking usage met
 
         {
             "rpp": 50,
+            "sort_by": "diamonds.carat",
+            "sort_dir": "DESC",
             "shape": ["RBC", "SQ", "AS"],
             "color": ["D", "E", "F", "G", "H", "I", "J", "K", "L"],
             "price_min": 0,
@@ -373,35 +215,15 @@ Callers use this endpoint to "logout". This can be useful for tracking usage met
             "matches": "single"
         }
 
-+ Response 201 (application/json)
-
-        {
-            "search_id": 83674
-        }
-
-
-## Diamond Search [/api/users/{user_id}/diamonds/searches/{search_id}{?sort,offset,limit}]
-
-+ Parameters
-    + user_id: `1` (number, required) - Userid.
-    + search_id: `83674` (number, required) - ID of search results.
-
-### GET-DIAMOND-SEARCH-RESULTS [GET]
-
-+ Parameters
-    + sort: `+color,-price` (string, optional) - comma-separated list of field names, optionally prefixed by "+" or "-" to indicate ascending or descending order (default is ascending order)
-    + offset: `0` (number, optional) - starting offset for results to be returned
-    + limit: `20` (number, optional) - maximum number of results to be returned in response
-
 + Response 200 (application/json)
 
         {
-            "total": 2,
-            "offset": 0,
+            "total_results": 2,
+            "page": 1,
             "limit": 20,
             "results": [
                 {
-                    "diamond_id": 98733222,
+                    "diamond_id": "98733222",
                     "shape": "SQ",
                     "carat": 3.33,
                     "color": "F",
@@ -410,44 +232,18 @@ Callers use this endpoint to "logout". This can be useful for tracking usage met
                     "lab": "FDI",
                     "measurements": "5.30 x 6.30 x 3.10",
                     "lw_ratio": "0.88:1",
-                    "price_per_carat": 20,
-                    "price": 1500.00,
-                    "graded": "Y",
-                    "report_id": "987654321",
-                    "report_url": "https://fmx.forevermark.com/certificate.htm?b=manual&f=1/9594.pdf",
-                    "report_date": "Jan-01",
                     "polish": "EX",
                     "symmetry": "VG",
                     "fluor": "NON",
-                    "fmd": "Crossworks",
-                    "matched_pair_id": 22233789,
-                    "table": 0.539,
-                    "depth": 0.623,
-                    "barcode": "20000418248",
-                    "crown_angle": 34.8,
-                    "crown_height": 15.2,
-                    "star_length": 1.0,
-                    "girdle_percent": 4.1,
-                    "girdle_lower": 1.1,
-                    "pavilion_angle": 40.8,
-                    "pavilion_depth": 10.1,
-                    "culet": "NON",
-                    "features": "Indented Natural,Knot,Twinning Wisp",
-                    "comments": "44850167",
-                    "company": {
-                        "name": "Crossworks",
-                        "address_1": "2101 Fourth Avenue",
-                        "address_2": "Suite 1320",
-                        "city": "Seattle",
-                        "country": "US",
-                        "phone": "(604) 669-9562",
-                        "fax": "(604) 669-9562",
-                        "email": "email@crossworks.com",
-                        "website": "https://crossworks.com"
-                    }
+                    "fmd": "Crossworks"
+                    "report_id": "987654321",
+                    "report_url": "https://fmx.forevermark.com/certificate.htm?b=manual&f=1/9594.pdf",
+                    "price_per_carat": 20,
+                    "price": 1500.00,
+                    "graded": "Y"
                 },
                 {
-                    "diamond_id": 65534422,
+                    "diamond_id": "65534422",
                     "shape": "RND",
                     "carat": 4.05,
                     "color": "H",
@@ -456,41 +252,15 @@ Callers use this endpoint to "logout". This can be useful for tracking usage met
                     "lab": "FDI",
                     "measurements": "7.60 x 7.59 x 5.55",
                     "lw_ratio": "1.00:1",
-                    "price_per_carat": 30,
-                    "price": 1000.00,
-                    "graded": "Y",
-                    "report_id": "123456789",
-                    "report_url": "https://fmx.forevermark.com/certificate.htm?b=manual&f=1/4543.pdf",
-                    "report_date": "Jan-01",
                     "polish": "VG",
                     "symmetry": "EX",
                     "fluor": "N",
                     "fmd": "BlueChannel, Inc."
-                    "matched_pair_id": 22233789,
-                    "table": 0.539,
-                    "depth": 0.623,
-                    "barcode": "20000418248",
-                    "crown_angle": 34.8,
-                    "crown_height": 15.2,
-                    "star_length": 1.0,
-                    "girdle_percent": 4.1,
-                    "girdle_lower": 1.1,
-                    "pavilion_angle": 40.8,
-                    "pavilion_depth": 10.1,
-                    "culet": "NON",
-                    "features": "Indented Natural,Knot,Twinning Wisp",
-                    "comments": "44850167",
-                    "company": {
-                        "name": "BlueChannel, Inc.",
-                        "address_1": "111 Main St.",
-                        "address_2": "Suite 999",
-                        "city": "Denver",
-                        "country": "US",
-                        "phone": "(604) 669-9562",
-                        "fax": "(604) 669-9562",
-                        "email": "email@bluechannel.com",
-                        "website": "https://bluechannel.com"
-                    }
+                    "report_id": "123456789",
+                    "report_url": "https://fmx.forevermark.com/certificate.htm?b=manual&f=1/4543.pdf",
+                    "price_per_carat": 30,
+                    "price": 1000.00,
+                    "graded": "Y"
                 }
             ]
         }
